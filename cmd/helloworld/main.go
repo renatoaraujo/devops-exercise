@@ -12,13 +12,20 @@ import (
 
 	"renatoaraujo/helloworld/cmd/helloworld/router"
 	"renatoaraujo/helloworld/pkg/logger"
+	"renatoaraujo/helloworld/pkg/storage"
 )
 
 func main() {
 	log := logger.NewLogger()
 
+	db, err := storage.NewDatabase(os.Getenv("DATABASE_DSN"))
+	if err != nil {
+		log.Fatal("failed initialise the database;", err)
+	}
+
 	deps := router.RouterDependencies{
-		LoggerClient: log,
+		LoggerClient:   log,
+		DatabaseClient: db,
 	}
 
 	r := router.NewRouter(deps)

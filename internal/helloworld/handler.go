@@ -1,24 +1,19 @@
 package helloworld
 
-import (
-	"fmt"
-
-	"renatoaraujo/helloworld/pkg/logger"
-)
-
-type Handler struct {
-	Logger logger.LoggerClient
+type Storage interface {
+	Save(string, string) error
 }
 
-func NewHandler(loggerClient logger.LoggerClient) *Handler {
+type Handler struct {
+	storage Storage
+}
+
+func NewHandler(storage Storage) *Handler {
 	return &Handler{
-		Logger: loggerClient,
+		storage: storage,
 	}
 }
 
 func (h *Handler) StoreUsername(username Username, birth DateOfBirth) error {
-	// TODO: Implement database storage logic
-	h.Logger.Info(fmt.Sprintf("storing user with username %s and date of birth %s", username.Username, birth.DateOfBirth))
-
-	return nil
+	return h.storage.Save(username.Username, birth.DateOfBirth)
 }

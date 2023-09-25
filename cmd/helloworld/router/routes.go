@@ -9,6 +9,7 @@ import (
 
 	"renatoaraujo/helloworld/internal/helloworld"
 	"renatoaraujo/helloworld/pkg/logger"
+	"renatoaraujo/helloworld/pkg/storage"
 )
 
 type BirthdayRequest struct {
@@ -20,7 +21,8 @@ type BirthdayResponse struct {
 }
 
 type RouterDependencies struct {
-	LoggerClient logger.LoggerClient
+	LoggerClient   logger.LoggerClient
+	DatabaseClient storage.DatabaseClient
 }
 
 func loggingMiddleware(next http.Handler, log logger.LoggerClient) http.Handler {
@@ -37,7 +39,7 @@ func NewRouter(deps RouterDependencies) *mux.Router {
 		return loggingMiddleware(next, deps.LoggerClient)
 	})
 
-	helloWorldHandler := helloworld.NewHandler(deps.LoggerClient)
+	helloWorldHandler := helloworld.NewHandler(deps.DatabaseClient)
 
 	r.HandleFunc("/hello/{username:[a-zA-Z]+}", func(w http.ResponseWriter, r *http.Request) {
 		var req BirthdayRequest
