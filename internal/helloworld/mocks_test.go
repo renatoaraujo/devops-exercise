@@ -9,6 +9,30 @@ type StorageMock struct {
 	mock.Mock
 }
 
+// GetDateOfBirthFromUsername provides a mock function with given fields: username
+func (_m *StorageMock) GetDateOfBirthFromUsername(username string) (string, error) {
+	ret := _m.Called(username)
+
+	var r0 string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string) (string, error)); ok {
+		return rf(username)
+	}
+	if rf, ok := ret.Get(0).(func(string) string); ok {
+		r0 = rf(username)
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(username)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // Save provides a mock function with given fields: _a0, _a1
 func (_m *StorageMock) Save(_a0 string, _a1 string) error {
 	ret := _m.Called(_a0, _a1)

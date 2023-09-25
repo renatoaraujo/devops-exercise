@@ -10,3 +10,7 @@ func NewDatabase(connString string) (DatabaseClient, error) {
 func (db DatabaseClient) Save(username, dateOfBirth string) error {
 	return nil
 }
+
+func (db DatabaseClient) GetDateOfBirthFromUsername(username string) (string, error) {
+	return "", nil
+}
