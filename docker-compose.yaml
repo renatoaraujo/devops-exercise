@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  helloworld:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.0-alpine3.18
+    environment:
+      POSTGRES_USER: helloworlduser
+      POSTGRES_PASSWORD: helloworldpass
+      POSTGRES_DB: helloworld
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
