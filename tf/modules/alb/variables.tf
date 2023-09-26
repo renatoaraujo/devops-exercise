@@ -1,8 +1,3 @@
-variable "app_name" {
-  description = "The name of the application"
-  type        = string
-}
-
 variable "container_port" {
   description = "The port the application listens on"
   type        = number

@@ -1,8 +1,3 @@
-variable "app_name" {
-  description = "The name of the application."
-  type        = string
-}
-
 variable "container_image" {
   description = "The Docker image for the application."
   type        = string

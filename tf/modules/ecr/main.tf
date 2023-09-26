@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "app" {
-  name                 = "${var.app_name}-repository"
+resource "aws_ecr_repository" "helloworld_service" {
+  name                 = "helloworld-service"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "app" {
   }
 
   tags = {
-    Name = "${var.app_name}-ecr-repo"
+    Name = "helloworld-ecr-repo"
   }
 
   lifecycle {
@@ -18,7 +18,7 @@ resource "aws_ecr_repository" "app" {
 
 
 resource "aws_ecr_lifecycle_policy" "app" {
-  repository = aws_ecr_repository.app.name
+  repository = aws_ecr_repository.helloworld_service.name
 
   policy = jsonencode({
     rules = [

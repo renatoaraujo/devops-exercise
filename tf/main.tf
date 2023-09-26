@@ -20,7 +20,6 @@ module "vpc" {
 module "ecs" {
   source = "./modules/ecs"
 
-  app_name           = var.app_name
   container_image    = var.container_image
   container_port     = var.container_port
   public_subnets_ids = module.vpc.public_subnets_ids
@@ -30,7 +29,6 @@ module "ecs" {
 module "alb" {
   source = "./modules/alb"
 
-  app_name           = var.app_name
   container_port     = var.container_port
   public_subnets_ids = module.vpc.public_subnets_ids
   alb_security_group = module.vpc.default_security_group_id
@@ -39,12 +37,8 @@ module "alb" {
 
 module "dynamodb" {
   source = "./modules/dynamodb"
-
-  app_name = var.app_name
 }
 
 module "ecr" {
   source = "./modules/ecr"
-
-  app_name = var.app_name
 }

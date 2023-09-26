@@ -1,5 +1,5 @@
 resource "aws_lb" "main" {
-  name               = "${var.app_name}-alb"
+  name               = "helloworld-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group]
@@ -8,7 +8,7 @@ resource "aws_lb" "main" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "${var.app_name}-alb"
+    Name = "helloworld-alb"
   }
 }
 
@@ -24,7 +24,7 @@ resource "aws_lb_listener" "front_end" {
 }
 
 resource "aws_lb_target_group" "front_end" {
-  name     = "${var.app_name}-tg"
+  name     = "helloworld-tg"
   port     = var.container_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id

@@ -8,16 +8,6 @@ output "public_subnets_ids" {
   value       = module.vpc.public_subnets_ids
 }
 
-output "ecs_cluster_name" {
-  description = "The name of the ECS cluster"
-  value       = module.ecs.service_name
-}
-
-output "ecs_security_group" {
-  description = "The security group of the ECS service"
-  value       = module.ecs.security_group
-}
-
 output "alb_dns_name" {
   description = "The DNS name of the Application Load Balancer"
   value       = module.alb.alb_dns_name
