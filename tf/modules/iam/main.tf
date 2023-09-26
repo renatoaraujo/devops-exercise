@@ -1,3 +1,7 @@
+resource "aws_iam_user" "helloworld_user" {
+  name = "helloworld-user"
+}
+
 resource "aws_iam_role" "github_actions" {
   name = "GitHubActionsDeployRole"
 
@@ -5,16 +9,15 @@ resource "aws_iam_role" "github_actions" {
     Version = "2012-10-17",
     Statement = [
       {
-        Action = "sts:AssumeRole",
+        Action = ["sts:AssumeRole", "sts:TagSession"],
         Effect = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::${var.aws_account_id}:user/helloworld-user"
+          AWS = "arn:aws:iam::${var.aws_account_id}:user/${aws_iam_user.helloworld_user.name}"
         }
       }
     ]
   })
 }
-
 
 resource "aws_iam_role_policy_attachment" "ecr_full_access" {
   role       = aws_iam_role.github_actions.name
@@ -24,10 +27,6 @@ resource "aws_iam_role_policy_attachment" "ecr_full_access" {
 resource "aws_iam_role_policy_attachment" "ecs_full_access" {
   role       = aws_iam_role.github_actions.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
-}
-
-resource "aws_iam_user" "helloworld_user" {
-  name = "helloworld-user"
 }
 
 resource "aws_iam_user_policy" "helloworld_user_policy" {
