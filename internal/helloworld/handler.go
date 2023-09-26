@@ -8,8 +8,8 @@ import (
 )
 
 type Storage interface {
-	Save(string, string) error
-	GetDateOfBirthFromUsername(username string) (string, error)
+	SaveUser(username string, dateOfBirth string) error
+	GetUser(username string) (string, error)
 }
 
 type Handler struct {
@@ -23,11 +23,11 @@ func NewHandler(storage Storage) *Handler {
 }
 
 func (h *Handler) StoreUsername(username Username, birth DateOfBirth) error {
-	return h.storage.Save(username.Username, birth.DateOfBirth)
+	return h.storage.SaveUser(username.Username, birth.DateOfBirth)
 }
 
 func (h *Handler) GetBirthdayMessage(username Username) (string, error) {
-	dateOfBirth, err := h.storage.GetDateOfBirthFromUsername(username.Username)
+	dateOfBirth, err := h.storage.GetUser(username.Username)
 	if err != nil {
 		return "", errors.New("failed to get date of birth")
 	}

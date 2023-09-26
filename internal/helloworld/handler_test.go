@@ -21,14 +21,14 @@ func TestHandler_StoreUsername(t *testing.T) {
 		{
 			name: "failed to store username",
 			storageSetup: func(client *StorageMock) {
-				client.On("Save", mock.Anything, mock.Anything).Return(errors.New("failed to save"))
+				client.On("SaveUser", mock.Anything, mock.Anything).Return(errors.New("failed to save"))
 			},
 			wantErr: true,
 		},
 		{
 			name: "successfully stored username",
 			storageSetup: func(client *StorageMock) {
-				client.On("Save", mock.Anything, mock.Anything).Return(nil)
+				client.On("SaveUser", mock.Anything, mock.Anything).Return(nil)
 			},
 			wantErr: false,
 		},
@@ -66,9 +66,9 @@ func TestHandler_GetBirthdayMessage(t *testing.T) {
 			name:     "failed to get date of birth from username",
 			username: Username{Username: "johndoe"},
 			storageSetup: func(client *StorageMock) {
-				client.On("GetDateOfBirthFromUsername", mock.Anything).Return(
+				client.On("GetUser", mock.Anything).Return(
 					"",
-					errors.New("failed to save"),
+					errors.New("failed"),
 				)
 			},
 			wantErr: true,
@@ -78,7 +78,7 @@ func TestHandler_GetBirthdayMessage(t *testing.T) {
 			username: Username{Username: "johndoe"},
 			storageSetup: func(client *StorageMock) {
 				inTenDays := time.Now().AddDate(0, 0, +3).Format("2006-01-02")
-				client.On("GetDateOfBirthFromUsername", mock.Anything).Return(
+				client.On("GetUser", mock.Anything).Return(
 					inTenDays,
 					nil,
 				)
@@ -91,7 +91,7 @@ func TestHandler_GetBirthdayMessage(t *testing.T) {
 			username: Username{Username: "johndoe"},
 			storageSetup: func(client *StorageMock) {
 				today := time.Now().Format("2006-01-02")
-				client.On("GetDateOfBirthFromUsername", mock.Anything).Return(
+				client.On("GetUser", mock.Anything).Return(
 					today,
 					nil,
 				)
@@ -104,7 +104,7 @@ func TestHandler_GetBirthdayMessage(t *testing.T) {
 			username: Username{Username: "johndoe"},
 			storageSetup: func(client *StorageMock) {
 				yesterday := time.Now().AddDate(0, 0, -1).Format("2006-01-02")
-				client.On("GetDateOfBirthFromUsername", mock.Anything).Return(
+				client.On("GetUser", mock.Anything).Return(
 					yesterday,
 					nil,
 				)

@@ -18,14 +18,14 @@ import (
 func main() {
 	log := logger.NewLogger()
 
-	db, err := storage.NewDatabase(os.Getenv("DATABASE_DSN"))
+	s, err := storage.NewDynamoDBClient(os.Getenv("DATABASE_DSN"), os.Getenv("AWS_REGION"))
 	if err != nil {
-		log.Fatal("failed initialise the database;", err)
+		log.Fatal("failed initialise the storage;", err)
 	}
 
 	deps := router.RouterDependencies{
-		LoggerClient:   log,
-		DatabaseClient: db,
+		Logger:  log,
+		Storage: s,
 	}
 
 	r := router.NewRouter(deps)

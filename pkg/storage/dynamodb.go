@@ -31,12 +31,12 @@ func NewDynamoDBClient(dsn, region string) (DynamoDBClientInterface, error) {
 
 func (dc *DynamoDBClient) SaveUser(username string, dateOfBirth string) error {
 	input := &dynamodb.PutItemInput{
-		TableName: aws.String("Users"),
+		TableName: aws.String("helloworld-users"),
 		Item: map[string]*dynamodb.AttributeValue{
-			"Username": {
+			"username": {
 				S: aws.String(username),
 			},
-			"DateOfBirth": {
+			"dateOfBirth": {
 				S: aws.String(dateOfBirth),
 			},
 		},
@@ -48,9 +48,9 @@ func (dc *DynamoDBClient) SaveUser(username string, dateOfBirth string) error {
 
 func (dc *DynamoDBClient) GetUser(username string) (string, error) {
 	input := &dynamodb.GetItemInput{
-		TableName: aws.String("Users"),
+		TableName: aws.String("helloworld-users"),
 		Key: map[string]*dynamodb.AttributeValue{
-			"Username": {
+			"username": {
 				S: aws.String(username),
 			},
 		},
@@ -65,5 +65,5 @@ func (dc *DynamoDBClient) GetUser(username string) (string, error) {
 		return "", nil
 	}
 
-	return *result.Item["DateOfBirth"].S, nil
+	return *result.Item["dateOfBirth"].S, nil
 }
