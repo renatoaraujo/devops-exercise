@@ -5,12 +5,14 @@ resource "aws_iam_user" "helloworld_user" {
 resource "aws_iam_role" "github_actions" {
   name = "GitHubActionsDeployRole"
 
+  max_session_duration = 7200
+
   assume_role_policy = jsonencode({
-    Version = "2012-10-17",
+    Version   = "2012-10-17",
     Statement = [
       {
-        Action = ["sts:AssumeRole", "sts:TagSession"],
-        Effect = "Allow",
+        Action    = ["sts:AssumeRole", "sts:TagSession"],
+        Effect    = "Allow",
         Principal = {
           AWS = "arn:aws:iam::${var.aws_account_id}:user/${aws_iam_user.helloworld_user.name}"
         }
@@ -34,7 +36,7 @@ resource "aws_iam_user_policy" "helloworld_user_policy" {
   user = aws_iam_user.helloworld_user.name
 
   policy = jsonencode({
-    Version = "2012-10-17",
+    Version   = "2012-10-17",
     Statement = [
       {
         Effect   = "Allow",
