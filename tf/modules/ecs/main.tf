@@ -11,7 +11,7 @@ resource "aws_ecs_task_definition" "app" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
 
   container_definitions = jsonencode([{
-    name  = "helloworld"
+    name  = "helloworld-service"
     image = var.container_image
     portMappings = [{
       containerPort = var.container_port

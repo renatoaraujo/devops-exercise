@@ -14,7 +14,7 @@ variable "app_name" {
 variable "container_image" {
   description = "The Docker image for the application."
   type        = string
-  default = "your_docker_image_path"
+  default = "helloworld-service"
 }
 
 variable "container_port" {
