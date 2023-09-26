@@ -14,3 +14,8 @@ variable "github_repository" {
   type        = string
   description = "GitHub repository"
 }
+
+variable "aws_account_id" {
+  description = "The AWS account ID"
+  type        = string
+}

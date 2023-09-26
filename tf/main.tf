@@ -11,6 +11,8 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 module "vpc" {
   source = "./modules/vpc"
 
@@ -47,12 +49,15 @@ module "ecr" {
 
 module "iam" {
   source = "./modules/iam"
+
+  aws_account_id = data.aws_caller_identity.current.account_id
 }
 
 module "github_secrets" {
   source = "./modules/github"
 
-  github_repository            = "devops-exercise"
-  helloworld_user_access_key   = module.iam.helloworld_user_access_key
-  helloworld_user_secret_key   = module.iam.helloworld_user_secret_key
+  github_repository          = "devops-exercise"
+  aws_account_id             = data.aws_caller_identity.current.account_id
+  helloworld_user_access_key = module.iam.helloworld_user_access_key
+  helloworld_user_secret_key = module.iam.helloworld_user_secret_key
 }

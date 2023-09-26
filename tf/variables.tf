@@ -1,14 +1,7 @@
-# AWS Region
-variable "region" {
+variable "aws_region" {
   description = "The AWS region to deploy the infrastructure in"
   type        = string
   default     = "eu-west-2"
-}
-
-variable "app_name" {
-  description = "The name of the application"
-  type        = string
-  default     = "helloworld"
 }
 
 variable "container_image" {

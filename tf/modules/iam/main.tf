@@ -8,12 +8,13 @@ resource "aws_iam_role" "github_actions" {
         Action = "sts:AssumeRole",
         Effect = "Allow",
         Principal = {
-          Service = "codebuild.amazonaws.com"
+          AWS = "arn:aws:iam::${var.aws_account_id}:user/helloworld-user"
         }
       }
     ]
   })
 }
+
 
 resource "aws_iam_role_policy_attachment" "ecr_full_access" {
   role       = aws_iam_role.github_actions.name
