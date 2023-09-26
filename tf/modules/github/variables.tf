@@ -19,3 +19,18 @@ variable "aws_account_id" {
   description = "The AWS account ID"
   type        = string
 }
+
+variable "ecr_repository_name" {
+  description = "The ECR repository name"
+  type        = string
+}
+
+variable "ecs_cluster_name" {
+  description = "The ECS cluster name"
+  type        = string
+}
+
+variable "ecs_service_name" {
+  description = "The ECS service name"
+  type        = string
+}

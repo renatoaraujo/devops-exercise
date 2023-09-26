@@ -60,4 +60,7 @@ module "github_secrets" {
   aws_account_id             = data.aws_caller_identity.current.account_id
   helloworld_user_access_key = module.iam.helloworld_user_access_key
   helloworld_user_secret_key = module.iam.helloworld_user_secret_key
+  ecr_repository_name        = module.ecr.repository_name
+  ecs_cluster_name           = module.ecs.ecs_cluster_name
+  ecs_service_name           = module.ecs.ecs_service_name
 }

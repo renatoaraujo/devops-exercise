@@ -54,7 +54,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: helloworld-service
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -62,4 +62,4 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster helloworld-cluster --service helloworld-service --force-new-deployment
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER_NAME }} --service ${{ var.ECS_SERVICE_NAME }} --force-new-deployment
