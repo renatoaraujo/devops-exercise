@@ -8,18 +8,16 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - dynamodb
 
-  postgres:
-    image: postgres:16.0-alpine3.18
-    environment:
-      POSTGRES_USER: helloworlduser
-      POSTGRES_PASSWORD: helloworldpass
-      POSTGRES_DB: helloworld
+  dynamodb:
+    image: amazon/dynamodb-local:latest
     ports:
-      - "5432:5432"
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dynamodb-data:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
 
 volumes:
-  pgdata:
+  dynamodb-data:
