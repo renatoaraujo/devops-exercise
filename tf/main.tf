@@ -4,13 +4,15 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
 }
 
 module "vpc" {
   source = "./modules/vpc"
-
-  app_name = var.app_name
 
   # If you want to override the default CIDR values, you can do so here:
   # vpc_cidr = "10.1.0.0/16"
@@ -45,4 +47,12 @@ module "ecr" {
 
 module "iam" {
   source = "./modules/iam"
+}
+
+module "github_secrets" {
+  source = "./modules/github"
+
+  github_repository            = "devops-exercise"
+  helloworld_user_access_key   = module.iam.helloworld_user_access_key
+  helloworld_user_secret_key   = module.iam.helloworld_user_secret_key
 }

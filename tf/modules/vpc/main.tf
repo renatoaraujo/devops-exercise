@@ -2,7 +2,7 @@ resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
   tags = {
-    Name = "${var.app_name}-vpc"
+    Name = "helloworld-vpc"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.app_name}-public-subnet-${count.index}"
+    Name = "helloworld-public-subnet-${count.index}"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "default" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "${var.app_name}-default-sg"
+    Name = "helloworld-default-sg"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "${var.app_name}-igw"
+    Name = "helloworld-igw"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.app_name}-public-rt"
+    Name = "helloworld-public-rt"
   }
 }
 
