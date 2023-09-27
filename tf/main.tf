@@ -16,6 +16,8 @@ data "aws_caller_identity" "current" {}
 module "vpc" {
   source = "./modules/vpc"
 
+  aws_region = var.aws_region
+
   # If you want to override the default CIDR values, you can do so here:
   # vpc_cidr = "10.1.0.0/16"
   # public_subnets_cidr = ["10.1.1.0/24", "10.1.2.0/24"]

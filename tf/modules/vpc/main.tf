@@ -1,6 +1,9 @@
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
   tags = {
     Name = "helloworld-vpc"
   }
@@ -62,4 +65,26 @@ resource "aws_route_table_association" "public" {
   count          = length(aws_subnet.public)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
+}
+
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id       = aws_vpc.main.id
+  service_name = "com.amazonaws.${var.aws_region}.ecr.api"
+  vpc_endpoint_type = "Interface"
+  subnet_ids   = aws_subnet.public.*.id
+
+  security_group_ids = [aws_security_group.default.id]
+
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id       = aws_vpc.main.id
+  service_name = "com.amazonaws.${var.aws_region}.ecr.dkr"
+  vpc_endpoint_type = "Interface"
+  subnet_ids   = aws_subnet.public.*.id
+
+  security_group_ids = [aws_security_group.default.id]
+
+  private_dns_enabled = true
 }
