@@ -24,6 +24,9 @@ jobs:
 
   build_and_deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
 
     env:
       AWS_REGION: 'eu-west-2'
@@ -50,14 +53,14 @@ jobs:
         with:
           mask-password: 'true'
 
-      - name: Build, tag, and push multi-architecture image to Amazon ECR
+      - name: Build, tag, and push image to Amazon ECR for ${{ matrix.platform }}
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_NAME }}
-          IMAGE_TAG: latest
+          IMAGE_TAG: latest-${{ matrix.platform }}
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --push
+          docker buildx build --platform ${{ matrix.platform }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --push
 
       - name: Update ECS service
         run: |
