@@ -11,3 +11,7 @@ output "helloworld_user_secret_key" {
 output "ecs_execution_role_arn" {
   value = aws_iam_role.ecs_execution_role.arn
 }
+
+output "vpc_flow_logs_role_arn" {
+  value = aws_iam_role.vpc_flow_logs.arn
+}

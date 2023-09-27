@@ -14,3 +14,12 @@ variable "aws_region" {
   description = "The AWS region to deploy the infrastructure in"
   type        = string
 }
+
+variable "cloudwatch_log_group_vpc_flow_logs_arn" {
+  description = "The CW log group dsn for the vpc flow"
+  type        = string
+}
+
+variable "log_flow_role_arn" {
+  type = string
+}

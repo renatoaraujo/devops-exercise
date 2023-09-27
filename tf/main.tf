@@ -16,7 +16,9 @@ data "aws_caller_identity" "current" {}
 module "vpc" {
   source = "./modules/vpc"
 
-  aws_region = var.aws_region
+  aws_region                             = var.aws_region
+  cloudwatch_log_group_vpc_flow_logs_arn = module.cloudwatch.cloudwatch_log_group_vpc_flow_logs_arn
+  log_flow_role_arn                      = module.iam.vpc_flow_logs_role_arn
 
   # If you want to override the default CIDR values, you can do so here:
   # vpc_cidr = "10.1.0.0/16"
@@ -31,7 +33,7 @@ module "ecs" {
   public_subnets_ids        = module.vpc.public_subnets_ids
   ecs_security_group        = module.vpc.default_security_group_id
   ecs_execution_role_arn    = module.iam.ecs_execution_role_arn
-  cloudwatch_log_group_name = module.cloudwatch.cloudwatch_log_group_name
+  cloudwatch_log_group_name = module.cloudwatch.cloudwatch_log_group_ecs_log_name
   ecr_repository_url        = module.ecr.repository_url
 }
 

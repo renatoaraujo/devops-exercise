@@ -88,3 +88,16 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
 
   private_dns_enabled = true
 }
+
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination      = var.cloudwatch_log_group_vpc_flow_logs_arn
+  log_destination_type = "cloud-watch-logs"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.main.id
+
+  tags = {
+    Name = "VPC Flow Logs"
+  }
+
+  iam_role_arn = var.log_flow_role_arn
+}

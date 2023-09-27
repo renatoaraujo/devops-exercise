@@ -24,7 +24,7 @@ variable "task_memory" {
 variable "desired_task_count" {
   description = "The number of tasks to run."
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "public_subnets_ids" {
