@@ -36,3 +36,18 @@ variable "ecs_security_group" {
   description = "The security group for the ECS service."
   type        = string
 }
+
+variable "aws_region" {
+  description = "The AWS region to deploy the infrastructure in"
+  type        = string
+}
+
+variable "ecs_execution_role_arn" {
+  description = "The role arn for ECS execution"
+  type        = string
+}
+
+variable "cloudwatch_log_group_name" {
+  description = "The CW log group name"
+  type        = string
+}

@@ -24,10 +24,13 @@ module "vpc" {
 module "ecs" {
   source = "./modules/ecs"
 
-  container_image    = var.container_image
-  container_port     = var.container_port
-  public_subnets_ids = module.vpc.public_subnets_ids
-  ecs_security_group = module.vpc.default_security_group_id
+  aws_region                = var.aws_region
+  container_image           = var.container_image
+  container_port            = var.container_port
+  public_subnets_ids        = module.vpc.public_subnets_ids
+  ecs_security_group        = module.vpc.default_security_group_id
+  ecs_execution_role_arn    = module.iam.ecs_execution_role_arn
+  cloudwatch_log_group_name = module.cloudwatch.cloudwatch_log_group_name
 }
 
 module "alb" {
@@ -63,4 +66,8 @@ module "github_secrets" {
   ecr_repository_name        = module.ecr.repository_name
   ecs_cluster_name           = module.ecs.ecs_cluster_name
   ecs_service_name           = module.ecs.ecs_service_name
+}
+
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
 }

@@ -8,3 +8,4 @@ tear-down:
 	terraform destroy -auto-approve
 	rm -rf .terraform
 	rm -rf terraform.tfstate.d
+	rm -rf .terraform.lock.hcl

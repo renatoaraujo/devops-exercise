@@ -13,7 +13,7 @@ variable "container_image" {
 variable "container_port" {
   description = "The port the application listens on"
   type        = number
-  default     = 80
+  default     = 8080
 }
 
 variable "github_repository" {
