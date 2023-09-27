@@ -25,12 +25,12 @@ module "ecs" {
   source = "./modules/ecs"
 
   aws_region                = var.aws_region
-  container_image           = var.container_image
   container_port            = var.container_port
   public_subnets_ids        = module.vpc.public_subnets_ids
   ecs_security_group        = module.vpc.default_security_group_id
   ecs_execution_role_arn    = module.iam.ecs_execution_role_arn
   cloudwatch_log_group_name = module.cloudwatch.cloudwatch_log_group_name
+  ecr_repository_url        = module.ecr.repository_url
 }
 
 module "alb" {

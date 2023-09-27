@@ -12,8 +12,9 @@ resource "aws_ecs_task_definition" "app" {
 
   container_definitions = jsonencode([
     {
-      name         = "helloworld-service"
-      image        = var.container_image
+      name  = "helloworld-service"
+      image = format("%s:latest", var.ecr_repository_url)
+
       portMappings = [
         {
           containerPort = var.container_port

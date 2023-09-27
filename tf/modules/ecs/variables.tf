@@ -1,5 +1,5 @@
-variable "container_image" {
-  description = "The Docker image for the application."
+variable "ecr_repository_url" {
+  description = "The URL of the ECR repository"
   type        = string
 }
 
@@ -12,13 +12,13 @@ variable "container_port" {
 variable "task_cpu" {
   description = "The amount of CPU to allocate for the task."
   type        = string
-  default     = "256"
+  default     = "2048"
 }
 
 variable "task_memory" {
   description = "The amount of memory to allocate for the task."
   type        = string
-  default     = "512"
+  default     = "4096"
 }
 
 variable "desired_task_count" {

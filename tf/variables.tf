@@ -4,12 +4,6 @@ variable "aws_region" {
   default     = "eu-west-2"
 }
 
-variable "container_image" {
-  description = "The Docker image for the application"
-  type        = string
-  default     = "helloworld-service"
-}
-
 variable "container_port" {
   description = "The port the application listens on"
   type        = number
