@@ -57,13 +57,6 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Register new ECS task definition
-        id: register-task-definition
-        run: |
-          NEW_TASK_DEF=$(aws ecs register-task-definition --family helloworld-task --cli-input-json file://path/to/your/task-definition.json)
-          TASK_DEF_ARN=$(echo $NEW_TASK_DEF | jq -r .taskDefinition.taskDefinitionArn)
-          echo "TASK_DEF_ARN=$TASK_DEF_ARN" >> $GITHUB_ENV
-
       - name: Update ECS service
         run: |
           aws ecs update-service --cluster ${{ vars.ECS_CLUSTER_NAME }} --service ${{ vars.ECS_SERVICE_NAME }} --force-new-deployment
