@@ -60,7 +60,7 @@ jobs:
           IMAGE_TAG: latest-${{ matrix.platform }}
         run: |
           docker buildx create --use
-          docker buildx build --platform ${{ matrix.platform }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --push
+          docker buildx build --platform ${{ matrix.platform }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$(echo $IMAGE_TAG | sed 's/\//-/g') . --push
 
       - name: Update ECS service
         run: |
